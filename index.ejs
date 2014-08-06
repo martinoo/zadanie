@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>My app</title>
+    <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.css">
+</head>
+<body>
+<div class="container">
+    <h1><%= title %></h1>
+
+
+    <form action="/add" method="post">
+        <table style="width:500px" style="height:80px"><br>
+        <tr><td> Nazov projektu </td><td><input type="text"  name="newItem"></td></tr>
+        <tr><td> Datum zaciatku </td><td><input type="date" name="newDate"></td></tr>
+        <tr><td> Cas zaciatku </td><td><input type="time" name="newTime"></td></tr>
+        <tr><td> Popis prace </td><td><input type="text" name="newNote"></td></tr>
+        <tr><td> Miesto vykonavania </td><td><input type="text" name="newPlace"></td></tr>
+        <tr><td><br><input type="submit"></td> </tr>
+        </table>
+    </form><br>
+
+    <br>
+    <table >
+        <% for (var i=0; i<items.length;i++){ %>
+        <tr>
+            <td width="100px"><%= items[i].nazov %></td>
+            <td width="100px"><%= items[i].dateZ %></td>
+            <td width="50px"><%= items[i].timeZ %></td>
+            <td width="120px"><%= items[i].popis %></td>
+            <td width="100px"><%= items[i].place %></td>
+        </tr>
+     <%}%>
+    </table>
+
+
+</div>
+
+<script src="jquery/dist/jquery.js"></script>
+<script src="bootstrap/dist/js/bootstrap.js"></script>
+
+</body>
+</html>
