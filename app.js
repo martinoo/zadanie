@@ -1,12 +1,8 @@
-var express = require('express');
-var app = express();
-var bodyParser = require('body-parser');
-var path = require('path');
-
-
-var todoItems = [{nazov:'Evidencia',dateZ:'25-6-1993',timeZ:'9:40',popis:'evidencia prihl.',place:'Zilina'},
-                 {nazov:'TrashOut',dateZ:'23-9-1990',timeZ:'10:30',popis:'trash',place:'Bratislava'}
-                ]
+var express = require('express')
+    , app = express()
+    , bodyParser = require('body-parser')
+    , path = require('path')
+    , mongo = require('./config/mongo')
 
 app.set('view engine','ejs');
 app.set('views',path.join(__dirname,'views'));
@@ -16,31 +12,59 @@ app.use(bodyParser());  //aby som dostal z form text / EXPRESS
 app.use(express.static(path.join(__dirname,'bower_components')));
 
 app.get('/',function(req,res){
-   res.render('index',{
-       title: 'Evidencia',
-       items : todoItems
-   });
+    mongo.get(function(err, db) {
+        if (err) {
+            return res.render('500', {message: err.message});
+        }
+        db.collection("todo").find().toArray(function(err, items) {
+           if (err) {
+               return res.render('500', {message: err.message});
+           }
+            res.render('index',{
+                title: 'Evidencia',
+                items : items
+            });
+        });
+    });
 });
 
 
-app.post('/add',function(req,res){
+app.post('/add',function(req,res) {
     var newItem = req.body.newItem;           //pouziva body-parser
-    var newDate = req.body.newDate;
+    var newDate = new Date(req.body.newDate);
+    if (newDate == 'Invalid Date') {
+        return res.render('500', {message: err.message});
+    }
     var newTime = req.body.newTime;
     var newNote = req.body.newNote;
     var newPlace = req.body.newPlace;
 
-    todoItems.push({
-        nazov:newItem,
-        dateZ:newDate,
-        timeZ:newTime,
-        popis:newNote,
-        place:newPlace
+    mongo.get(function(err, db) {
+        if (err) {
+            return res.render('500', {message: err.message});
+        }
+
+        db.collection("todo").insert({
+            nazov:newItem,
+            dateZ:newDate,
+            timeZ:newTime,
+            popis:newNote,
+            place:newPlace
+        }, function(err) {
+            if (err) {
+                return res.render('500', {message: err.message});
+            }
+            res.redirect('/');
+        });
+
     });
-    res.redirect('/');        
-})
+});
 
-
-app.listen(3000,function(){
-    console.log('.....port 3000');
-})
+mongo.init(function(err) {
+    if (!err) {
+        var port = process.env.PORT || 3000;
+        app.listen(port, function() {
+            console.log('.....port 3000');
+        });
+    }
+});
