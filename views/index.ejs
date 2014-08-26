@@ -3,11 +3,57 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>My app</title>
-    <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.css">
+    <link href="styles/main.css" rel="stylesheet" >
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="css/datepicker.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 </head>
 <body>
-<div class="container">
-    <h1><%= title %></h1>
+<header>
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#" >Evidencia</a>
+
+                <form class="navbar-form navbar-left" role="search">
+                    <div class="form-group" align="center">
+                        <input type="datetime-local" class="form-control" name="dateFrom" >
+                        <input type="datetime-local" class="form-control" name="dateTo" >
+
+                    <button type="submit" id="search" class="btn btn-default" >Hľadaj</button>
+                    </div>
+                </form>
+
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+
+
+
+                </ul>
+
+
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+</header>
+
+
+<div class="well">
+
 
 
     <form action="/add" method="post">
@@ -17,28 +63,40 @@
         <tr><td> Cas zaciatku </td><td><input type="time" name="newTime"></td></tr>
         <tr><td> Popis prace </td><td><input type="text" name="newNote"></td></tr>
         <tr><td> Miesto vykonavania </td><td><input type="text" name="newPlace"></td></tr>
-        <tr><td><br><input type="submit"></td> </tr>
+        <tr><td></td><td><br><input type="submit" id="pridaj"></td> </tr>
         </table>
     </form><br>
 
+
+
+</div>
+
     <br>
-    <table >
+
+    <table align="center">
+        <div class="zoznam">
         <% for (var i=0; i<items.length;i++){ %>
         <tr>
             <td width="100px"><%= items[i].nazov %></td>
-            <td width="100px"><%= items[i].dateZ %></td>
+            <td width="150px"><%= items[i].dateZ.toDateString() %></td>
             <td width="50px"><%= items[i].timeZ %></td>
             <td width="120px"><%= items[i].popis %></td>
             <td width="100px"><%= items[i].place %></td>
         </tr>
      <%}%>
+        </div>
     </table>
 
 
-</div>
 
+
+
+
+<script src="js/bootstrap-datepicker.js"></script>
 <script src="jquery/dist/jquery.js"></script>
 <script src="bootstrap/dist/js/bootstrap.js"></script>
 
+<!-- Latest compiled and minified JavaScript -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -4,14 +4,24 @@ var express = require('express')
     , path = require('path')
     , mongo = require('./config/mongo')
 
+
+
 app.set('view engine','ejs');
 app.set('views',path.join(__dirname,'views'));
 
-app.use(bodyParser());  //aby som dostal z form text / EXPRESS
+  //aby som dostal z form text / EXPRESS
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json());
+
+
 
 app.use(express.static(path.join(__dirname,'bower_components')));
 
+
+
+
 app.get('/',function(req,res){
+
     mongo.get(function(err, db) {
         if (err) {
             return res.render('500', {message: err.message});
@@ -38,6 +48,10 @@ app.post('/add',function(req,res) {
     var newTime = req.body.newTime;
     var newNote = req.body.newNote;
     var newPlace = req.body.newPlace;
+
+
+
+
 
     mongo.get(function(err, db) {
         if (err) {
