@@ -24,14 +24,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#" >Evidencia</a>
+                <a class="navbar-brand" href="/" >Evidencia</a>
 
-                <form class="navbar-form navbar-left" role="search">
+                <form action="/search" class="navbar-form navbar-left" role="search" method="get">
                     <div class="form-group" align="center">
-                        <input type="datetime-local" class="form-control" name="dateFrom" >
-                        <input type="datetime-local" class="form-control" name="dateTo" >
+                        <input type="date" class="form-control" name="dfrom" >
+                        <input type="date" class="form-control"  name="dto" >
 
-                    <button type="submit" id="search" class="btn btn-default" >Hľadaj</button>
+                    <button type="submit" id="search"  >Hľadaj</button>
                     </div>
                 </form>
 
@@ -56,13 +56,15 @@
 
 
 
-    <form action="/add" method="post">
+    <form action="/records" method="post">
         <table style="width:500px" style="height:80px"><br>
-        <tr><td> Nazov projektu </td><td><input type="text"  name="newItem"></td></tr>
-        <tr><td> Datum zaciatku </td><td><input type="date" name="newDate"></td></tr>
-        <tr><td> Cas zaciatku </td><td><input type="time" name="newTime"></td></tr>
-        <tr><td> Popis prace </td><td><input type="text" name="newNote"></td></tr>
-        <tr><td> Miesto vykonavania </td><td><input type="text" name="newPlace"></td></tr>
+        <tr><td> Názov projektu </td><td><input type="text"  name="newItem"></td></tr>
+        <tr><td> Dátum začiatku </td><td><input type="date" name="newDate"></td></tr>
+        <tr><td> Čas začiatku </td><td><input type="time" name="newTime"></td></tr>
+        <tr><td> Dátum ukončenia </td><td><input type="date" name="newDateEnd"></td></tr>
+        <tr><td> Čas ukončenia </td><td><input type="time" name="newTimeEnd"></td></tr>
+        <tr><td> Popis práce </td><td><input type="text" name="newNote"></td></tr>
+        <tr><td> Miesto vykonávania </td><td><input type="text" name="newPlace"></td></tr>
         <tr><td></td><td><br><input type="submit" id="pridaj"></td> </tr>
         </table>
     </form><br>
@@ -73,22 +75,27 @@
 
     <br>
 
-    <table align="center">
+<div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading">Panel heading</div>
+
+    <!-- Table -->
+   <p> <table class="table" align="center">
         <div class="zoznam">
-        <% for (var i=0; i<items.length;i++){ %>
-        <tr>
-            <td width="100px"><%= items[i].nazov %></td>
-            <td width="150px"><%= items[i].dateZ.toDateString() %></td>
-            <td width="50px"><%= items[i].timeZ %></td>
-            <td width="120px"><%= items[i].popis %></td>
-            <td width="100px"><%= items[i].place %></td>
-        </tr>
-     <%}%>
+            <% for (var i=0; i<items.length;i++){ %>
+            <tr>
+                <td width="100px"><%= items[i].nazov %></td>
+                <td width="150px"><%= items[i].dateZ.toDateString() %></td>
+                <td width="50px"><%= items[i].timeZ %></td>
+                <td width="150px"><%= items[i].dateEnd.toDateString() %></td>
+                <td width="50px"><%= items[i].timeEnd %></td>
+                <td width="120px"><%= items[i].popis %></td>
+                <td width="100px"><%= items[i].place %></td>
+            </tr>
+            <%}%>
         </div>
-    </table>
-
-
-
+    </table></p>
+</div>
 
 
 

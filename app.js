@@ -39,19 +39,46 @@ app.get('/',function(req,res){
     });
 });
 
+app.get('/search',function(req,res){
 
-app.post('/add',function(req,res) {
+    var date_start = new Date(req.query.dfrom); //querry funguje pre express metoda GET
+    var date_end = new Date(req.query.dto);
+    var res = mongo.collection('todo').aggregate({ $subtract: [ date_start, date_end ] });
+
+    console.log(res);
+
+    mongo.get(function(err, db) {
+        if (err) {
+            return res.render('500', {message: err.message});
+        }
+        db.collection("todo").find({
+            $or:[{dateZ:{$gte:date_start,$lte:date_end}},{dateEnd:{$gte:date_start,$lte:date_end}},
+                {dateZ:{$lte:date_start,$lte:date_end},dateEnd:{$gte:date_start,$gte:date_end}}]}).toArray(function(err, items) {
+            if (err) {
+                return res.render('500', {message: err.message});
+            }
+            res.render('index',{
+                title: 'Evidencia',
+                items : items
+            });
+        });
+    });
+});
+
+app.post('/records',function(req,res) {
     var newItem = req.body.newItem;           //pouziva body-parser
     var newDate = new Date(req.body.newDate);
     if (newDate == 'Invalid Date') {
         return res.render('500', {message: err.message});
     }
     var newTime = req.body.newTime;
+    var newDateEnd = new Date(req.body.newDateEnd);
+    if (newDateEnd == 'Invalid Date') {
+        return res.render('500', {message: err.message});
+    }
+    var newTimeEnd = req.body.newTimeEnd;
     var newNote = req.body.newNote;
     var newPlace = req.body.newPlace;
-
-
-
 
 
     mongo.get(function(err, db) {
@@ -63,6 +90,8 @@ app.post('/add',function(req,res) {
             nazov:newItem,
             dateZ:newDate,
             timeZ:newTime,
+            dateEnd:newDateEnd,
+            timeEnd:newTimeEnd,
             popis:newNote,
             place:newPlace
         }, function(err) {
