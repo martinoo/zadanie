@@ -43,7 +43,7 @@ app.get('/search',function(req,res){
 
     var date_start = new Date(req.query.dfrom); //querry funguje pre express metoda GET
     var date_end = new Date(req.query.dto);
-    var milis;
+    date_end.setHours(23,59,59,59);
 
 
 
@@ -61,7 +61,11 @@ app.get('/search',function(req,res){
                 title: 'Evidencia',
                 items : items
             });
-            console.log((items[0].dateEnd.getTime()-items[0].dateZ.getTime())/3600000);
+            //if(date_end.getDate()<=items[0].dateEnd.getTime()&&date_start.getDate()<=items[0].dateZ.getDate()) {
+             //   return console.log((date_end.getTime() - items[0].dateZ.getTime()) / 3600000);
+            //}
+
+
         });
     });
 

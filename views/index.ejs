@@ -59,10 +59,10 @@
     <form action="/records" method="post">
         <table style="width:500px" style="height:80px"><br>
         <tr><td> Názov projektu </td><td><input type="text"  name="newItem"></td></tr>
-        <tr><td> Dátum začiatku </td><td><input type="date" name="newDate"></td></tr>
-        <tr><td> Čas začiatku </td><td><input type="time" name="newTime"></td></tr>
-        <tr><td> Dátum ukončenia </td><td><input type="date" name="newDateEnd"></td></tr>
-        <tr><td> Čas ukončenia </td><td><input type="time" name="newTimeEnd"></td></tr>
+        <tr><td> Dátum a čas začiatku </td><td><input type="datetime-local" name="newDate"></td></tr>
+
+        <tr><td> Dátum a čas ukončenia </td><td><input type="datetime-local" name="newDateEnd"></td></tr>
+
         <tr><td> Popis práce </td><td><input type="text" name="newNote"></td></tr>
         <tr><td> Miesto vykonávania </td><td><input type="text" name="newPlace"></td></tr>
         <tr><td></td><td><br><input type="submit" id="pridaj"></td> </tr>
@@ -88,9 +88,9 @@
             <tr>
                 <td width="100px"><%= items[i].nazov %></td>
                 <td width="150px"><%= items[i].dateZ.toDateString() %></td>
-                <td width="50px"><%= items[i].timeZ %></td>
+
                 <td width="150px"><%= items[i].dateEnd.toDateString() %></td>
-                <td width="50px"><%= items[i].timeEnd %></td>
+
                 <td width="120px"><%= items[i].popis %></td>
                 <td width="100px"><%= items[i].place %></td>
             </tr>
