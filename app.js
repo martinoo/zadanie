@@ -43,9 +43,9 @@ app.get('/search',function(req,res){
 
     var date_start = new Date(req.query.dfrom); //querry funguje pre express metoda GET
     var date_end = new Date(req.query.dto);
-    var res = mongo.collection('todo').aggregate({ $subtract: [ date_start, date_end ] });
+    var milis;
 
-    console.log(res);
+
 
     mongo.get(function(err, db) {
         if (err) {
@@ -61,8 +61,11 @@ app.get('/search',function(req,res){
                 title: 'Evidencia',
                 items : items
             });
+            console.log((items[0].dateEnd.getTime()-items[0].dateZ.getTime())/3600000);
         });
     });
+
+
 });
 
 app.post('/records',function(req,res) {
