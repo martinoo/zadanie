@@ -3,7 +3,7 @@ var express = require('express')
     , bodyParser = require('body-parser')
     , path = require('path')
     , mongo = require('./config/mongo')
-
+    , sum = 0.0
 
 
 
@@ -23,17 +23,25 @@ app.use(express.static(path.join(__dirname,'bower_components')));
 
 app.get('/',function(req,res){
 
+
+
     mongo.get(function(err, db) {
         if (err) {
             return res.render('500', {message: err.message});
         }
-        db.collection("todo").find().toArray(function(err, items) {
+        db.collection("todo").find().sort({dateEnd:-1}).toArray(function(err, items) {
            if (err) {
                return res.render('500', {message: err.message});
            }
+            sum=0.0;
+            for(var i=0;i<items.length;i++){
+                sum+=(items[i].dateEnd.getTime()-items[i].dateZ.getTime())/3600000;
+            }
+
             res.render('index',{
                 title: 'Evidencia',
-                items : items
+                items : items,
+                label_text : sum.toFixed(2)
             });
         });
     });
@@ -53,17 +61,28 @@ app.get('/search',function(req,res){
         }
         db.collection("todo").find({
             $or:[{dateZ:{$gte:date_start,$lte:date_end}},{dateEnd:{$gte:date_start,$lte:date_end}},
-                {dateZ:{$lte:date_start,$lte:date_end},dateEnd:{$gte:date_start,$gte:date_end}}]}).toArray(function(err, items) {
+                {dateZ:{$lte:date_start,$lte:date_end},dateEnd:{$gte:date_start,$gte:date_end}}]}).sort({dateEnd:-1}).toArray(function(err, items) {
             if (err) {
                 return res.render('500', {message: err.message});
             }
+            sum=0.0;
+            for(var i=0;i<items.length;i++){
+                if(items[i].dateEnd>=date_end){
+                    sum+=(date_end.getTime() - items[i].dateZ.getTime())/3600000;
+                    console.log((date_end.getTime() - items[i].dateZ.getTime())/3600000);}
+                else if (items[i].dateZ<=date_start){
+                    sum+=(items[i].dateEnd.getTime() - date_start.getTime())/3600000;
+                    console.log((items[i].dateEnd.getTime() - date_start.getTime())/3600000);}
+                else if (items[i].dateZ<=date_start && items[i].dateEnd>=date_end){
+                    sum+=(items[i].dateEnd.getTime() - items[i].dateZ.getTime())/3600000;
+                    console.log((items[i].dateEnd.getTime() - items[i].dateZ.getTime())/3600000);}
+            }
             res.render('index',{
                 title: 'Evidencia',
-                items : items
+                items : items,
+                label_text : sum.toFixed(2)        //na zaokruhlenie toFixed
             });
-            //if(date_end.getDate()<=items[0].dateEnd.getTime()&&date_start.getDate()<=items[0].dateZ.getDate()) {
-             //   return console.log((date_end.getTime() - items[0].dateZ.getTime()) / 3600000);
-            //}
+            console.log(sum);
 
 
         });

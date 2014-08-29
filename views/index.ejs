@@ -2,7 +2,7 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>My app</title>
+    <title>Evidencia projektov</title>
     <link href="styles/main.css" rel="stylesheet" >
 
     <!-- Latest compiled and minified CSS -->
@@ -51,7 +51,8 @@
     </nav>
 </header>
 
-
+<div class="col-md-1"></div>
+<div class="col-md-10">
 <div class="well">
 
 
@@ -68,19 +69,28 @@
         <tr><td></td><td><br><input type="submit" id="pridaj"></td> </tr>
         </table>
     </form><br>
-
+    </div>
 
 
 </div>
-
+<div class="col-lg-1"></div>
     <br>
 
+
+
+
 <div class="panel panel-default">
+
     <!-- Default panel contents -->
-    <div class="panel-heading label-success">Panel heading</div>
-    <div align="center">
-        <span id="labelID" class="label label-success" >Success</span>
+    <div class="panel-heading " align="center"> Súčet hodín :
+
+        <label id="label_sum" >
+            <%= label_text %>
+        </label>
+
     </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
     <!-- Table -->
    <p> <table class="table" align="center">
         <div class="zoznam">
@@ -88,15 +98,19 @@
             <tr>
                 <td width="100px"><%= items[i].nazov %></td>
                 <td width="150px"><%= items[i].dateZ.toDateString() %></td>
-
+                <td width="50px"><%= items[i].dateZ.getHours()%> : <%= items[i].dateZ.getMinutes()%> </td>
                 <td width="150px"><%= items[i].dateEnd.toDateString() %></td>
-
+                <td width="50px"><%= items[i].dateEnd.getHours()%> : <%= items[i].dateEnd.getMinutes()%> </td>
                 <td width="120px"><%= items[i].popis %></td>
                 <td width="100px"><%= items[i].place %></td>
             </tr>
             <%}%>
         </div>
     </table></p>
+        </div>
+
+    <div class="col-lg-1"></div>
+
 </div>
 
 
