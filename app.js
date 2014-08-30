@@ -68,14 +68,11 @@ app.get('/search',function(req,res){
             sum=0.0;
             for(var i=0;i<items.length;i++){
                 if(items[i].dateEnd>=date_end){
-                    sum+=(date_end.getTime() - items[i].dateZ.getTime())/3600000;
-                    console.log((date_end.getTime() - items[i].dateZ.getTime())/3600000);}
+                    sum+=(date_end.getTime() - items[i].dateZ.getTime())/3600000;}
                 else if (items[i].dateZ<=date_start){
-                    sum+=(items[i].dateEnd.getTime() - date_start.getTime())/3600000;
-                    console.log((items[i].dateEnd.getTime() - date_start.getTime())/3600000);}
+                    sum+=(items[i].dateEnd.getTime() - date_start.getTime())/3600000;}
                 else if (items[i].dateZ<=date_start && items[i].dateEnd>=date_end){
-                    sum+=(items[i].dateEnd.getTime() - items[i].dateZ.getTime())/3600000;
-                    console.log((items[i].dateEnd.getTime() - items[i].dateZ.getTime())/3600000);}
+                    sum+=(items[i].dateEnd.getTime() - items[i].dateZ.getTime())/3600000;}
             }
             res.render('index',{
                 title: 'Evidencia',
@@ -138,3 +135,6 @@ mongo.init(function(err) {
         });
     }
 });
+
+
+

@@ -3,7 +3,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>Evidencia projektov</title>
-    <link href="styles/main.css" rel="stylesheet" >
+
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
@@ -13,73 +13,64 @@
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 </head>
 <body>
-<header>
-    <nav class="navbar navbar-default" role="navigation">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/" >Evidencia</a>
-
-                <form action="/search" class="navbar-form navbar-left" role="search" method="get">
-                    <div class="form-group" align="center">
-                        <input type="date" class="form-control" name="dfrom" >
-                        <input type="date" class="form-control"  name="dto" >
-
-                    <button type="submit" id="search"  >Hľadaj</button>
-                    </div>
-                </form>
-
-            </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
 
 
+<div class="navbar navbar-inverse" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Evidencia projektov</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <form action="/search" class="navbar-form navbar-right" role="form">
+                <div class="form-group">
+                    <input type="date" class="form-control" name="dfrom" >
+                </div>
+                <div class="form-group">
+                    <input type="date" class="form-control"  name="dto" >
+                </div>
+                <button type="submit" id="search" class="btn btn-info" >Hľadaj</button>
+            </form>
+        </div><!--/.navbar-collapse -->
+    </div>
+</div>
 
-                </ul>
-
-
-            </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
-    </nav>
-</header>
+<div class="container">
 
 <div class="col-md-1"></div>
 <div class="col-md-10">
 <div class="well">
 
 
-
     <form action="/records" method="post">
         <table style="width:500px" style="height:80px"><br>
-        <tr><td> Názov projektu </td><td><input type="text"  name="newItem"></td></tr>
-        <tr><td> Dátum a čas začiatku </td><td><input type="datetime-local" name="newDate"></td></tr>
+        <tr><td> <label class="control-label" for="textinput">Názov projektu</label> </td><td><input type="text" class="form-control" name="newItem"></td></tr>
+        <tr><td><label class="control-label" for="textinput">Dátum a čas začiatku</label> </td><td><input type="datetime-local" class="form-control" name="newDate"></td></tr>
 
-        <tr><td> Dátum a čas ukončenia </td><td><input type="datetime-local" name="newDateEnd"></td></tr>
+        <tr><td><label class="control-label" for="textinput">Dátum a čas ukončenia</label> </td><td><input type="datetime-local" class="form-control" name="newDateEnd"></td></tr>
 
-        <tr><td> Popis práce </td><td><input type="text" name="newNote"></td></tr>
-        <tr><td> Miesto vykonávania </td><td><input type="text" name="newPlace"></td></tr>
-        <tr><td></td><td><br><input type="submit" id="pridaj"></td> </tr>
+        <tr><td><label class="control-label" for="textinput">Popis práce</label> </td><td><input type="text" class="form-control" name="newNote"></td></tr>
+        <tr><td><label class="control-label" for="textinput"> Miesto vykonávania</label> </td><td><input type="text" class="form-control" name="newPlace"></td></tr>
+        <tr><td></td><td><br><input type="submit" class="btn btn-success" id="pridaj"></td> </tr>
         </table>
     </form><br>
     </div>
+
 
 
 </div>
 <div class="col-lg-1"></div>
     <br>
 
+</div>
 
-
-
-<div class="panel panel-default">
+<div class="container">
+    <div class="panel panel-default">
 
     <!-- Default panel contents -->
     <div class="panel-heading " align="center"> Súčet hodín :
@@ -92,27 +83,46 @@
     <div class="col-md-1"></div>
     <div class="col-md-10">
     <!-- Table -->
-   <p> <table class="table" align="center">
-        <div class="zoznam">
-            <% for (var i=0; i<items.length;i++){ %>
-            <tr>
-                <td width="100px"><%= items[i].nazov %></td>
-                <td width="150px"><%= items[i].dateZ.toDateString() %></td>
-                <td width="50px"><%= items[i].dateZ.getHours()%> : <%= items[i].dateZ.getMinutes()%> </td>
-                <td width="150px"><%= items[i].dateEnd.toDateString() %></td>
-                <td width="50px"><%= items[i].dateEnd.getHours()%> : <%= items[i].dateEnd.getMinutes()%> </td>
-                <td width="120px"><%= items[i].popis %></td>
-                <td width="100px"><%= items[i].place %></td>
-            </tr>
-            <%}%>
-        </div>
-    </table></p>
-        </div>
+
+
+             <table class="table" align="center">
+                 <thead>
+                 <tr>
+
+                     <th>Názov projektu</th>
+                     <th>Dátum začiatku</th>
+                     <th>Čas začiatku</th>
+                     <th>Dátum ukončenia</th>
+                     <th>Čas ukončenia</th>
+                     <th>Popis práce</th>
+                     <th>Miesto</th>
+                 </tr>
+                 </thead>
+
+
+
+
+                    <div class="zoznam">
+                    <% for (var i=0; i<items.length;i++){ %>
+                    <tr>
+                            <td ><%= items[i].nazov %></td>
+                            <td ><%= items[i].dateZ.toDateString() %></td>
+                            <td ><%= items[i].dateZ.getHours()%> : <%= items[i].dateZ.getMinutes()%> </td>
+                            <td ><%= items[i].dateEnd.toDateString() %></td>
+                            <td ><%= items[i].dateEnd.getHours()%> : <%= items[i].dateEnd.getMinutes()%> </td>
+                            <td ><%= items[i].popis %></td>
+                            <td ><%= items[i].place %></td>
+                    </tr>
+                         <%}%>
+                    </div>
+                </table>
+
+    </div>
 
     <div class="col-lg-1"></div>
 
 </div>
-
+</div>
 
 
 <script src="js/bootstrap-datepicker.js"></script>
